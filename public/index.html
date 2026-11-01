@@ -1,4 +1,4 @@
-<!DOCTYPE html>  
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -81,7 +81,7 @@ h1{order:1;margin:.4rem 0 0;font-size:clamp(1.7rem,8.2vw,2.5rem);line-height:1.1
 .split{grid-template-columns:1fr;gap:2.5rem}
 }
 /* always-visible colour stripe */
-body::before{content:'';position:fixed;top:0;left:0;right:0;height:1px;z-index:90;pointer-events:none;background:linear-gradient(90deg,#4FB3E8 0 16.66%,#F2B632 16.66% 33.33%,#E8643C 33.33% 50%,#B8D437 50% 66.66%,#2F6FDB 66.66% 83.33%,#3DBE8B 83.33% 100%)}
+body::before{content:'';position:fixed;top:0;left:0;right:0;height:3px;z-index:90;pointer-events:none;background:linear-gradient(90deg,#4FB3E8 0 16.66%,#F2B632 16.66% 33.33%,#E8643C 33.33% 50%,#B8D437 50% 66.66%,#2F6FDB 66.66% 83.33%,#3DBE8B 83.33% 100%) left bottom/100% 1px no-repeat,#0B2F26}
 /* sticky glass header */
 .hero{--pad:max(1.25rem,calc((100vw - 1120px)/2 + 1.25rem));padding-top:82px}
 .hero>.wrap>nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:1.1rem var(--pad);background:transparent;--p:0;transform:translateZ(0)}
