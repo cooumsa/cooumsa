@@ -1,5 +1,5 @@
-const V = 'coumsa-v2';
-const SHELL = ['/', '/manifest.json', '/icon-192.png', '/icon-512.png'];
+const V = 'coumsa-v3';
+const SHELL = ['/', '/manifest.json', '/icons/icon-192.png', '/icons/icon-512.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
