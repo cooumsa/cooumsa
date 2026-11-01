@@ -84,8 +84,8 @@ h1{order:1;margin:.4rem 0 0;font-size:clamp(1.7rem,8.2vw,2.5rem);line-height:1.1
 body::before{content:'';position:fixed;top:0;left:0;right:0;height:3px;z-index:90;pointer-events:none;background:linear-gradient(90deg,#4FB3E8 0 16.66%,#F2B632 16.66% 33.33%,#E8643C 33.33% 50%,#B8D437 50% 66.66%,#2F6FDB 66.66% 83.33%,#3DBE8B 83.33% 100%) left bottom/100% 1px no-repeat,#0B2F26}
 /* sticky glass header */
 .hero{--pad:max(1.25rem,calc((100vw - 1120px)/2 + 1.25rem));padding-top:82px}
-.hero>.wrap>nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:1.1rem var(--pad);background:transparent;--p:0;transform:translateZ(0)}
-.hero>.wrap>nav::before{content:'';position:absolute;inset:0;z-index:-1;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);opacity:var(--p);pointer-events:none;will-change:opacity}
+.hero>.wrap>nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:1.1rem var(--pad);background:transparent;--p:0}
+.hero>.wrap>nav::before{content:'';position:absolute;inset:0;z-index:-1;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);opacity:var(--p);pointer-events:none}
 .hero>.wrap>nav .menu{right:var(--pad)}
 .hero>.wrap>nav .brand,.hero>.wrap>nav .bname small,.hero>.wrap>nav .burger{transition:color .4s ease,border-color .4s ease}
 .hero>.wrap>nav .burger span{transition:background-color .4s ease,transform .2s,opacity .2s}
