@@ -300,6 +300,18 @@ details.g.pop[open] .fl{animation:fin .28s ease}
 .ft img.ok{opacity:1}
 .ft.has svg{opacity:0}
 .ft.has em{position:absolute;left:0;right:0;bottom:0;padding:3px 0;background:rgba(10,30,25,.65);color:#fff}
+/* file icons v2 */
+.ft{width:46px;height:54px;border-radius:7px 15px 7px 7px;gap:0;justify-content:flex-end;padding-bottom:9px;box-sizing:border-box;border:1.5px solid color-mix(in srgb,var(--c) 28%,transparent);overflow:hidden}
+.ft::before{content:"";position:absolute;top:-1px;right:-1px;width:13px;height:13px;background:linear-gradient(225deg,var(--panel) 50%,color-mix(in srgb,var(--c) 22%,#fff) 50%);border-bottom-left-radius:5px}
+.ft::after{content:"";position:absolute;left:8px;top:17px;width:18px;height:9px;background:repeating-linear-gradient(to bottom,var(--c) 0 2px,transparent 2px 5px);opacity:.4}
+.ft svg{display:none}
+.ft em{background:var(--c);color:#fff;font:800 .5rem/1 var(--body);letter-spacing:0;padding:3px 3px;border-radius:4px;white-space:nowrap;max-width:100%}
+.ft.to{--c:#1E6B2E}.ft.tp{--c:#B42318}.ft.td{--c:#1D4F91}.ft.ts{--c:#B45309}.ft.tv{--c:#6B3FC0}.ft.ti{--c:#0F6B5C}
+.ft.ti{width:46px;height:54px;border-radius:10px;border:0;padding:0;justify-content:center}
+.ft.ti::before,.ft.ti::after{display:none}
+.ft.ti svg{display:block}
+.ft.ti em{background:transparent;color:inherit;padding:0}
+.ft.ti.has em{background:rgba(10,30,25,.65);color:#fff;padding:3px 0;border-radius:0}
 </style>
 </head>
 <body>
