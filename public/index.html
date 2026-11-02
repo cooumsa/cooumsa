@@ -7,8 +7,8 @@
 <title>COOUMSA | Chukwuemeka Odumegwu Ojukwu University Medical Students Association</title>
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#0B2F26">
-<link rel="icon" type="image/png" href="/icon-192.png">
-<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="icon" type="image/png" href="/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="COOUMSA">
@@ -653,20 +653,41 @@ var dp=null,ios=/iphone|ipad|ipod/i.test(navigator.userAgent)&&!window.MSStream;
 window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;lk.hidden=false});
 window.addEventListener('appinstalled',function(){dp=null;lk.hidden=true});
 if(ios)lk.hidden=false;
-function hint(){
+function hint(m){
  if(document.getElementById('iosHint'))return;
  var d=document.createElement('div');d.id='iosHint';
  d.style.cssText='position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:200;background:#0B2F26;color:#fff;border-radius:16px;padding:14px 16px;font:500 .95rem/1.45 system-ui,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.35);display:flex;gap:12px;align-items:center';
- d.innerHTML='<span style="flex:1">To install: tap the <b>Share</b> button, then <b>Add to Home Screen</b>.</span>';
+ d.innerHTML='<span style="flex:1">'+(m||'To install: tap the <b>Share</b> button, then <b>Add to Home Screen</b>.')+'</span>';
  var b=document.createElement('button');b.type='button';b.textContent='OK';
  b.style.cssText='border:0;border-radius:99px;background:#F2B632;color:#10241D;font:700 .9rem system-ui,sans-serif;padding:.55rem 1rem;cursor:pointer';
  b.onclick=function(){d.remove()};d.appendChild(b);document.body.appendChild(d);
 }
-lk.addEventListener('click',function(e){
- e.preventDefault();
- if(dp){var p=dp;dp=null;p.prompt();p.userChoice.then(function(){lk.hidden=true},function(){})}
+function doInstall(){
+ if(dp){var p=dp;dp=null;p.prompt();p.userChoice.then(function(r){
+  if(r&&r.outcome==='accepted')lk.hidden=true;
+  else try{localStorage.setItem(KEY,Date.now())}catch(e){}
+ },function(){})}
  else if(ios)hint();
-});
+ else hint('To install: tap the browser menu <b>\u22EE</b>, then <b>Install app</b> or <b>Add to Home screen</b>.');
+}
+lk.addEventListener('click',function(e){e.preventDefault();doInstall()});
+var KEY='coumsa-install-dismissed';
+function dismissed(){try{var t=+localStorage.getItem(KEY);return t&&Date.now()-t<2*864e5}catch(e){return false}}
+function banner(){
+ if(document.getElementById('instBar')||dismissed()||(!dp&&!ios))return;
+ var d=document.createElement('div');d.id='instBar';
+ d.style.cssText='position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:190;background:#0B2F26;color:#fff;border-radius:16px;padding:12px 14px;font:500 .92rem/1.35 system-ui,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.35);display:flex;gap:10px;align-items:center';
+ d.innerHTML='<img src="/icons/icon-192.png" alt="" width="40" height="40" style="border-radius:10px;flex:none"><span style="flex:1"><b>Install COOUMSA</b><br>Open it like an app, straight from your home screen.</span>';
+ var n=document.createElement('button');n.type='button';n.textContent='Not now';
+ n.style.cssText='border:0;background:transparent;color:#C9D8CF;font:600 .85rem system-ui,sans-serif;padding:.5rem .4rem;cursor:pointer';
+ n.onclick=function(){try{localStorage.setItem(KEY,Date.now())}catch(e){}d.remove()};
+ var b=document.createElement('button');b.type='button';b.textContent='Install';
+ b.style.cssText='border:0;border-radius:99px;background:#F2B632;color:#10241D;font:700 .9rem system-ui,sans-serif;padding:.6rem 1.1rem;cursor:pointer';
+ b.onclick=function(){d.remove();doInstall()};
+ d.appendChild(n);d.appendChild(b);document.body.appendChild(d);
+}
+setTimeout(banner,3000);
+window.addEventListener('appinstalled',function(){var x=document.getElementById('instBar');if(x)x.remove()});
 })();
 </script>
 </body>
