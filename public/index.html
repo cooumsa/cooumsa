@@ -193,9 +193,12 @@ html.lock,html.lock body{overflow:hidden}
 details.g{border:1px solid var(--line);border-radius:1rem;background:var(--panel);margin-bottom:.7rem;overflow:hidden}
 details.g summary{padding:.9rem 1rem;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;gap:.6rem;list-style:none;min-height:48px;align-items:center}
 details.g summary::-webkit-details-marker{display:none}
-details.g summary .fi{flex:none;width:26px;height:26px;fill:var(--gold)}
+details.g summary .fic{flex:none;width:34px;height:34px;display:grid;place-items:center;font-style:normal}
+details.g summary .fi{width:32px;height:32px;display:block}
+details.g summary::after{content:"";flex:none;width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);margin:0 .35rem 3px .1rem;transition:transform .2s}
+details.g[open]>summary::after{transform:rotate(-135deg);margin-bottom:-3px}
 details.g summary .gn{flex:1;min-width:0}
-details.g summary span{font-weight:500;color:var(--muted);font-size:.85rem}
+details.g summary span{font-weight:600;color:var(--green);background:#E7EFE9;font-size:.8rem;min-width:28px;text-align:center;padding:.2rem .55rem;border-radius:99px}
 .fl{list-style:none;margin:0;padding:0}
 .fl button{display:flex;width:100%;gap:.7rem;align-items:center;text-align:left;border:0;border-top:1px solid var(--line);background:transparent;color:inherit;font:500 .95rem/1.35 var(--body);padding:.7rem 1rem;cursor:pointer;min-height:52px}
 .fl button:hover{background:var(--bg)}
@@ -531,7 +534,7 @@ var UP=document.getElementById('uppg');function lock(){document.documentElement.
 function render(){
 var q=Q.value.trim().toLowerCase(),h='',any=false,g=cur&&cur.g;
 if(!g){L.innerHTML='<p class="none">Materials for this course are coming soon.</p>';return}
-var FI='<svg class="fi" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5h4.2a1.5 1.5 0 0 1 1.1.5L11.5 7h8A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5z"/></svg>',LI=function(i,k){return '<li><button type="button" data-i="'+i+'" data-g="'+k+'"><span class="ft t'+F[i][2]+'"><svg viewBox="0 0 24 24" aria-hidden="true">'+IC[F[i][2]]+'</svg><em>'+TG[F[i][2]]+'</em>'+(F[i][2]==='i'?'<img data-s="https://drive.google.com/thumbnail?id='+F[i][1]+'&sz=w160" alt="" decoding="async" referrerpolicy="no-referrer">':'')+'</span><span>'+esc(F[i][0])+'</span></button><button type="button" class="mo" data-m="'+i+'" data-g="'+k+'" aria-label="File options">'+DOTS+'</button></li>'};
+var FI='<i class="fic"><svg class="fi" viewBox="0 0 32 32" aria-hidden="true"><path fill="#D9980F" d="M3 9a3 3 0 0 1 3-3h6.2a3 3 0 0 1 2.1.9l2.2 2.1H26a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z"/><path fill="#F5B82E" d="M3 14a3 3 0 0 1 3-3h20a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z"/></svg></i>',LI=function(i,k){return '<li><button type="button" data-i="'+i+'" data-g="'+k+'"><span class="ft t'+F[i][2]+'"><svg viewBox="0 0 24 24" aria-hidden="true">'+IC[F[i][2]]+'</svg><em>'+TG[F[i][2]]+'</em>'+(F[i][2]==='i'?'<img data-s="https://drive.google.com/thumbnail?id='+F[i][1]+'&sz=w160" alt="" decoding="async" referrerpolicy="no-referrer">':'')+'</span><span>'+esc(F[i][0])+'</span></button><button type="button" class="mo" data-m="'+i+'" data-g="'+k+'" aria-label="File options">'+DOTS+'</button></li>'};
 g.forEach(function(x,k){
 var ok=function(i){return !q||F[i][0].toLowerCase().indexOf(q)>-1};
 var items=x[1].filter(ok);
