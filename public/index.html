@@ -172,7 +172,7 @@ button,a,summary{touch-action:manipulation}
 .ul{display:block;font-weight:700;font-size:.9rem;margin:0 0 1rem;color:var(--ink)}
 .uf{display:block;width:100%;margin-top:.35rem;border:1.5px solid var(--line);border-radius:.8rem;background:var(--panel);color:var(--ink);font:400 1rem var(--body);padding:.7rem .9rem;box-sizing:border-box}
 .uf:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-.ub{width:100%;height:50px;border:0;border-radius:99px;background:var(--green);color:#fff;font:700 1rem var(--body);cursor:pointer}.ub:disabled{opacity:.6}
+.ub{width:100%;height:50px;border:0;border-radius:99px;background:var(--green);color:#fff;font:700 1rem var(--body);cursor:pointer}.ub:disabled{opacity:.6}.ub.busy{display:flex;align-items:center;justify-content:center;gap:.6rem;opacity:.85}.ub.busy::before{content:"";flex:none;width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;animation:ubs .8s linear infinite}@keyframes ubs{to{transform:rotate(360deg)}}
 .ums{margin:.9rem 0 0;font-size:.95rem;min-height:1.4em;color:var(--muted)}.ums.ok{color:var(--leaf);font-weight:700}.ums.er{color:#B3261E}
 .ush{font:700 1.05rem var(--head);color:var(--ink);margin:1.6rem 0 .7rem}
 .ush:first-of-type{margin-top:1.2rem}
@@ -209,7 +209,7 @@ button,a,summary{touch-action:manipulation}
 .usv b{display:block;font-size:.98rem;color:var(--ink)}
 </style>
 <script>document.documentElement.classList.add("js")</script>
-<script>window.COOU_UPLOAD="https://script.google.com/macros/s/AKfycbzPGD-pj0K7ALBx5R7NW-6Cs8kWBdqFMFBaVbWwYIOZHFx2cLpZcfQTKQHCefx8oJ-4/exec";</script>
+<script>window.COOU_UPLOAD="https://script.google.com/macros/s/AKfycbzPGD-pj0K7ALBx5R7NW-6Cs8kWBdqFMFBaVbWwYIOZHFx2cLpZcfQTKQHCefx8oJ-4/exec";window.COOU_BZ=function(b,on,t){if(!b)return;b.classList.toggle("busy",!!on);if(on){if(b.dataset.t==null)b.dataset.t=b.textContent;b.textContent=t||"Sending..."}else if(b.dataset.t!=null){b.textContent=b.dataset.t;delete b.dataset.t}};</script>
 <style>
 .ov{position:fixed;inset:0;z-index:100;background:var(--bg);color:var(--ink);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 .ov[hidden]{display:none}
@@ -648,15 +648,15 @@ back()});
 var RM=document.getElementById('rptm'),RN=document.getElementById('rptn'),RG=document.getElementById('rptgo'),RR=document.getElementById('rptr'),ri2=-1,rg2=-1,rsel='';
 if(!window.COOU_UPLOAD){var sr=document.getElementById('shrep');if(sr)sr.hidden=true}
 function reported(){try{return JSON.parse(localStorage.getItem('rep')||'[]')}catch(e){return[]}}
-function openReport(i,g){if(reported().indexOf(F[i][1])>-1){toast('You already reported this file');return}ri2=i;rg2=g;rsel='';RN.value='';RM.textContent='';RM.className='ums';RG.disabled=false;Array.prototype.forEach.call(RR.children,function(b){b.setAttribute('aria-checked','false')});document.getElementById('rptf').textContent=F[i][0];RP.hidden=false;lock();history.pushState({ov:1},'');depth++}
+function openReport(i,g){if(reported().indexOf(F[i][1])>-1){toast('You already reported this file');return}ri2=i;rg2=g;rsel='';RN.value='';RM.textContent='';RM.className='ums';RG.disabled=false;COOU_BZ(RG,0);Array.prototype.forEach.call(RR.children,function(b){b.setAttribute('aria-checked','false')});document.getElementById('rptf').textContent=F[i][0];RP.hidden=false;lock();history.pushState({ov:1},'');depth++}
 RR.addEventListener('click',function(e){var b=e.target.closest('.ufc');if(!b)return;rsel=b.dataset.v;Array.prototype.forEach.call(RR.children,function(x){x.setAttribute('aria-checked',x===b)});RM.textContent=''});
 document.getElementById('rptbk').addEventListener('click',back);
 RG.addEventListener('click',function(){
  if(!rsel){RM.textContent='Choose a reason first.';RM.className='ums er';return}
- var F0=F[ri2],gn=(cur&&cur.g&&cur.g[rg2])?cur.g[rg2][0]:'';RG.disabled=true;RM.textContent='Sending...';RM.className='ums';
+ var F0=F[ri2],gn=(cur&&cur.g&&cur.g[rg2])?cur.g[rg2][0]:'';RG.disabled=true;COOU_BZ(RG,1,'Sending...');RM.textContent='Sending...';RM.className='ums';
  fetch(window.COOU_UPLOAD,{method:'POST',body:JSON.stringify({action:'report',id:F0[1],title:F0[0],level:cur&&cur.l,course:cur&&cur.c,group:gn,reason:rsel,note:RN.value.trim()})})
- .then(function(x){return x.json()}).then(function(j){if(j&&j.ok){var r=reported();r.push(F0[1]);try{localStorage.setItem('rep',JSON.stringify(r.slice(-200)))}catch(e){}back();toast('Thanks. We will review this file.')}else{RG.disabled=false;RM.textContent='Could not send. Try again.';RM.className='ums er'}})
- .catch(function(){RG.disabled=false;RM.textContent='Could not send. Check your connection.';RM.className='ums er'})});
+ .then(function(x){return x.json()}).then(function(j){if(j&&j.ok){var r=reported();r.push(F0[1]);try{localStorage.setItem('rep',JSON.stringify(r.slice(-200)))}catch(e){}COOU_BZ(RG,0);back();toast('Thanks. We will review this file.')}else{RG.disabled=false;COOU_BZ(RG,0);RM.textContent='Could not send. Try again.';RM.className='ums er'}})
+ .catch(function(){RG.disabled=false;COOU_BZ(RG,0);RM.textContent='Could not send. Check your connection.';RM.className='ums er'})});
 function fromHash(){var m=/^#file=([\w-]+)$/.exec(location.hash);if(!m)return;var k=-1;for(var j=0;j<F.length;j++){if(F[j][1]===m[1]){k=j;break}}history.replaceState(null,'',location.pathname+location.search);if(k>-1)openFile(k)}
 var sx=0,sy=0,sT=0;
 function ts(e){var t=e.touches[0];sx=t.clientX;sy=t.clientY;sT=Date.now()}
@@ -722,15 +722,15 @@ fm.addEventListener('submit',function(e){
  var G=grp();if(!G){say('Please choose a lecturer or type the name.','er');return}
  if(!f){say('Please choose a file.','er');return}
  if(f.size>15*1024*1024){say('That file is over 15 MB. Please send a smaller one.','er');return}
- go.disabled=true;say('Sending... please keep this page open.');
+ go.disabled=true;COOU_BZ(go,1,'Sending...');say('Sending... please keep this page open.');
  var r=new FileReader();
- r.onerror=function(){go.disabled=false;say('Could not read that file.','er')};
+ r.onerror=function(){go.disabled=false;COOU_BZ(go,0);say('Could not read that file.','er')};
  r.onload=function(){
   var b=String(r.result).split(',')[1]||'';
   fetch(U,{method:'POST',body:JSON.stringify({level:lv.value,course:co.value,group:G,title:t,name:na.value.trim(),fileName:f.name,mime:f.type,data:b})})
   .then(function(x){return x.json()})
-  .then(function(j){go.disabled=false;if(j&&j.ok){say('Thank you! Your file was sent and will appear once it is approved.','ok');fm.reset();showF();fsel='';lsel='';ln.value='';fill()}else say('Upload failed. Please try again.','er')})
-  .catch(function(){go.disabled=false;say('Could not send. Check your connection and try again.','er')})
+  .then(function(j){go.disabled=false;COOU_BZ(go,0);if(j&&j.ok){say('Thank you! Your file was sent and will appear once it is approved.','ok');fm.reset();showF();fsel='';lsel='';ln.value='';fill()}else say('Upload failed. Please try again.','er')})
+  .catch(function(){go.disabled=false;COOU_BZ(go,0);say('Could not send. Check your connection and try again.','er')})
  };
  r.readAsDataURL(f)
 });
