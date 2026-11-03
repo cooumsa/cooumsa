@@ -172,7 +172,7 @@ button,a,summary{touch-action:manipulation}
 .ul{display:block;font-weight:700;font-size:.9rem;margin:0 0 1rem;color:var(--ink)}
 .uf{display:block;width:100%;margin-top:.35rem;border:1.5px solid var(--line);border-radius:.8rem;background:var(--panel);color:var(--ink);font:400 1rem var(--body);padding:.7rem .9rem;box-sizing:border-box}
 .uf:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-.ub{width:100%;height:50px;border:0;border-radius:99px;background:var(--green);color:#fff;font:700 1rem var(--body);cursor:pointer}.ub:disabled{opacity:.6}.ub.busy{display:flex;align-items:center;justify-content:center;gap:.6rem;opacity:.85}.ub.busy::before{content:"";flex:none;width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;animation:ubs .8s linear infinite}@keyframes ubs{to{transform:rotate(360deg)}}
+.ub{width:100%;height:50px;border:0;border-radius:99px;background:var(--green);color:#fff;font:700 1rem var(--body);cursor:pointer}.ub:disabled{opacity:.6}.upbar{height:8px;border-radius:99px;background:#D6DED6;overflow:hidden;margin:0 0 .8rem}.upbar i{display:block;height:100%;width:0;background:var(--gold);border-radius:99px;transition:width .25s ease}.upbar.fin i{animation:upf 1.1s ease-in-out infinite}@keyframes upf{50%{opacity:.45}}.ub.busy{display:flex;align-items:center;justify-content:center;gap:.6rem;opacity:.85}.ub.busy::before{content:"";flex:none;width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;animation:ubs .8s linear infinite}@keyframes ubs{to{transform:rotate(360deg)}}
 .ums{margin:.9rem 0 0;font-size:.95rem;min-height:1.4em;color:var(--muted)}.ums.ok{color:var(--leaf);font-weight:700}.ums.er{color:#B3261E}
 .ush{font:700 1.05rem var(--head);color:var(--ink);margin:1.6rem 0 .7rem}
 .ush:first-of-type{margin-top:1.2rem}
@@ -521,7 +521,7 @@ details.g.pop[open] .fl{animation:fin .28s ease}
 <p class="sub">Send lecture notes, past questions or textbooks. We check every file before it goes on the site.</p>
 <form id="upform" novalidate>
 <h4 class="ush">Your file</h4>
-<label class="udrop" id="updrop"><input id="upfi" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png,.mp4"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0L7 9m5-5l5 5M5 20h14"/></svg><b id="updt">Tap to choose a file</b><small id="updh">PDF, Word, PowerPoint, image or video, up to 15 MB</small></label>
+<label class="udrop" id="updrop"><input id="upfi" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png,.mp4"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0L7 9m5-5l5 5M5 20h14"/></svg><b id="updt">Tap to choose a file</b><small id="updh">PDF, Word, PowerPoint, image or video, up to 20 MB</small></label>
 <div id="upwhere"><h4 class="ush">Where should it go?</h4>
 <div class="urow">
 <label class="ul">Level<select class="uf" id="uplv"><option value="100">100 Level</option><option value="200">200 Level</option><option value="300">300 Level</option><option value="400">400 Level</option><option value="500">500 Level</option><option value="600">600 Level</option></select></label>
@@ -535,6 +535,7 @@ details.g.pop[open] .fl{animation:fin .28s ease}
 <label class="ul">Title<input class="uf" id="upti" type="text" maxlength="120" placeholder="e.g. Brachial plexus notes" autocomplete="off"></label>
 <label class="ul">Your name (shown as "Shared by", optional)<input class="uf" id="upna" type="text" maxlength="60" autocomplete="name"></label>
 <div class="usv"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><div><small>Saving to</small><b id="upsv"></b></div><button type="button" class="upc" id="upchg">Change</button></div>
+<div class="upbar" id="upbar" hidden><i></i></div>
 <button type="submit" class="ub" id="upgo">Send for approval</button>
 <p class="ums" id="upms" role="status"></p>
 </form></div></div></div>
@@ -653,7 +654,7 @@ RR.addEventListener('click',function(e){var b=e.target.closest('.ufc');if(!b)ret
 document.getElementById('rptbk').addEventListener('click',back);
 RG.addEventListener('click',function(){
  if(!rsel){RM.textContent='Choose a reason first.';RM.className='ums er';return}
- var F0=F[ri2],gn=(cur&&cur.g&&cur.g[rg2])?cur.g[rg2][0]:'';RG.disabled=true;COOU_BZ(RG,1,'Sending...');RM.textContent='Sending...';RM.className='ums';
+ var F0=F[ri2],gn=(cur&&cur.g&&cur.g[rg2])?cur.g[rg2][0]:'';RG.disabled=true;COOU_BZ(RG,1,'Sending...');RM.textContent='';RM.className='ums';
  fetch(window.COOU_UPLOAD,{method:'POST',body:JSON.stringify({action:'report',id:F0[1],title:F0[0],level:cur&&cur.l,course:cur&&cur.c,group:gn,reason:rsel,note:RN.value.trim()})})
  .then(function(x){return x.json()}).then(function(j){if(j&&j.ok){var r=reported();r.push(F0[1]);try{localStorage.setItem('rep',JSON.stringify(r.slice(-200)))}catch(e){}COOU_BZ(RG,0);back();toast('Thanks. We will review this file.')}else{RG.disabled=false;COOU_BZ(RG,0);RM.textContent='Could not send. Try again.';RM.className='ums er'}})
  .catch(function(){RG.disabled=false;COOU_BZ(RG,0);RM.textContent='Could not send. Check your connection.';RM.className='ums er'})});
@@ -715,22 +716,33 @@ window.COOU_OPEN_UPLOAD=function(l,c,g){
  fillG();fm.classList.add('locked');say('');
 };
 function say(t,c){ms.textContent=t;ms.className='ums'+(c?' '+c:'')}
+var upb=document.getElementById('upbar'),upi=upb&&upb.firstElementChild;
+function pg(p,t,fin){if(!upb)return;upb.hidden=false;upb.classList.toggle('fin',!!fin);upi.style.width=p+'%';COOU_BZ(go,1,t)}
+function pe(){if(!upb)return;upb.hidden=true;upb.classList.remove('fin');upi.style.width='0'}
 fm.addEventListener('submit',function(e){
  e.preventDefault();
  var f=fi.files[0],t=ti.value.trim();
  if(!t){say('Please add a title.','er');return}
  var G=grp();if(!G){say('Please choose a lecturer or type the name.','er');return}
  if(!f){say('Please choose a file.','er');return}
- if(f.size>15*1024*1024){say('That file is over 15 MB. Please send a smaller one.','er');return}
- go.disabled=true;COOU_BZ(go,1,'Sending...');say('Sending... please keep this page open.');
+ if(f.size>20*1024*1024){say('That file is over 20 MB. Please send a smaller one.','er');return}
+ go.disabled=true;pg(0,'Preparing...');say('');
  var r=new FileReader();
- r.onerror=function(){go.disabled=false;COOU_BZ(go,0);say('Could not read that file.','er')};
+ r.onerror=function(){go.disabled=false;COOU_BZ(go,0);pe();say('Could not read that file.','er')};
  r.onload=function(){
   var b=String(r.result).split(',')[1]||'';
-  fetch(U,{method:'POST',body:JSON.stringify({level:lv.value,course:co.value,group:G,title:t,name:na.value.trim(),fileName:f.name,mime:f.type,data:b})})
-  .then(function(x){return x.json()})
-  .then(function(j){go.disabled=false;COOU_BZ(go,0);if(j&&j.ok){say('Thank you! Your file was sent and will appear once it is approved.','ok');fm.reset();showF();fsel='';lsel='';ln.value='';fill()}else say('Upload failed. Please try again.','er')})
-  .catch(function(){go.disabled=false;COOU_BZ(go,0);say('Could not send. Check your connection and try again.','er')})
+  var body=JSON.stringify({level:lv.value,course:co.value,group:G,title:t,name:na.value.trim(),fileName:f.name,mime:f.type,data:b});
+  function fail(){go.disabled=false;COOU_BZ(go,0);pe();say('Could not send. Check your connection and try again.','er')}
+  var xhr=new XMLHttpRequest();
+  xhr.open('POST',U);
+  xhr.setRequestHeader('Content-Type','text/plain;charset=utf-8');
+  xhr.timeout=300000;
+  xhr.upload.onprogress=function(ev){if(ev.lengthComputable){var p=Math.min(99,Math.round(ev.loaded/ev.total*100));pg(p,'Sending '+p+'%')}};
+  xhr.upload.onload=function(){pg(100,'Finishing...',true)};
+  xhr.onload=function(){var j=null;try{j=JSON.parse(xhr.responseText)}catch(e){}go.disabled=false;COOU_BZ(go,0);pe();if(j&&j.ok){say('Thank you! Your file was sent and will appear once it is approved.','ok');fm.reset();showF();fsel='';lsel='';ln.value='';fill()}else say('Upload failed. Please try again.','er')};
+  xhr.onerror=fail;xhr.ontimeout=fail;
+  pg(0,'Sending 0%');
+  xhr.send(body)
  };
  r.readAsDataURL(f)
 });
@@ -738,8 +750,9 @@ fm.addEventListener('submit',function(e){
 function esc2(x){return String(x)}
 fetch(U+(U.indexOf('?')<0?'?':'&')+'list=1').then(function(x){return x.json()}).then(function(a){
  if(!Array.isArray(a))return;
+ var HD={};a.forEach(function(m){if(m&&m.hide&&m.id)HD[m.id]=1});
  a.forEach(function(m){
-  if(!m||!m.id||!m.level||!m.course)return;
+  if(!m||!m.id||!m.level||!m.course||HD[m.id])return;
   var ty='pdsvi'.indexOf(m.type)>-1?m.type:'d';
   if(m.hidden)return;F.push([esc2(m.title||'Untitled'),m.id,ty,String(m.name||'a student').slice(0,60)]);var ix=F.length-1;
   var gn=m.group||'Student uploads';var L=LIB[m.level]||(LIB[m.level]={});var g=L[m.course]||(L[m.course]=[]);
@@ -747,7 +760,10 @@ fetch(U+(U.indexOf('?')<0?'?':'&')+'list=1').then(function(x){return x.json()}).
   if(!grp){grp=[gn,[]];g.push(grp)}
   grp[1].push(ix);
   if(grp[2]){var sg=null;grp[2].forEach(function(z){if(z[0]==='New uploads')sg=z});if(!sg){sg=['New uploads',[]];grp[2].push(sg)}sg[1].push(ix)}
- })
+ });
+ /* files the owner hid from the report email: drop them from every folder */
+ function pr(l){return l.filter(function(i){return !(F[i]&&HD[F[i][1]])})}
+ if(Object.keys(HD).length)Object.keys(LIB).forEach(function(lv){var L=LIB[lv];Object.keys(L).forEach(function(c){var g=L[c];if(!Array.isArray(g))return;g.forEach(function(x){if(!Array.isArray(x))return;if(Array.isArray(x[1]))x[1]=pr(x[1]);if(Array.isArray(x[2]))x[2].forEach(function(y){if(Array.isArray(y)&&Array.isArray(y[1]))y[1]=pr(y[1])})})})})
 }).catch(function(){})
 })();
 </script>
